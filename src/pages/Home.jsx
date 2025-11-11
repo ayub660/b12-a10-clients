@@ -6,7 +6,7 @@ import CommunityStats from "./CommunityStats";
 
 const Home = () => {
     return (
-        <div className="px-6">
+        <div className="bg-base-200 min-h-screen">
             <Banner />
             <Categories />
             <RecentIssues />

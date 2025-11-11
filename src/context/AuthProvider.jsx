@@ -1,12 +1,10 @@
 import React, { createContext, useState, useEffect } from "react";
-import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "../firebase/firebase.config"; //  firebase config
+import { auth } from "../firebase/firebase.config";
+import { onAuthStateChanged, signOut } from "firebase/auth";
 
-// 1️⃣ Create Context
 export const AuthContext = createContext();
 
-// 2️⃣ Provider Component
-export const AuthProvider = ({ children }) => {
+const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
 
@@ -15,10 +13,20 @@ export const AuthProvider = ({ children }) => {
             setUser(currentUser);
             setLoading(false);
         });
+
         return () => unsubscribe();
     }, []);
 
-    const value = { user, loading };
+    const logout = async () => {
+        await signOut(auth);
+        setUser(null);
+    };
 
-    return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+    return (
+        <AuthContext.Provider value={{ user, loading, logout }}>
+            {children}
+        </AuthContext.Provider>
+    );
 };
+
+export default AuthProvider;

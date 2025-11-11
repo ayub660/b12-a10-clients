@@ -1,13 +1,13 @@
 import React from "react";
 
-const Footer = () => (
-    <footer className="bg-gray-800 text-white py-6 mt-10">
-        <div className="container mx-auto text-center space-y-2">
-            <h1 className="text-xl font-bold">CleanCity</h1>
-            <p>Helping communities keep their environment clean and safe.</p>
-            <p>© 2025 CleanCity. All rights reserved.</p>
-        </div>
-    </footer>
-);
+const Footer = () => {
+    return (
+        <footer className="bg-base-100 shadow-inner py-6 mt-10">
+            <div className="max-w-6xl mx-auto text-center text-gray-500">
+                &copy; {new Date().getFullYear()} CleanCity. All rights reserved.
+            </div>
+        </footer>
+    );
+};
 
 export default Footer;

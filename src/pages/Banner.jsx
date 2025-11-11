@@ -1,16 +1,18 @@
-import { bannerImages } from "../../assets/images";
+import React from "react";
+import { Carousel } from "react-responsive-carousel";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { bannerImages } from "../assets/images";
 
 const Banner = () => {
     return (
-        <div className="flex overflow-x-auto gap-4 my-4">
-            {bannerImages.map((img, i) => (
-                <img
-                    key={i}
-                    src={img}
-                    alt={`Banner ${i}`}
-                    className="w-full h-64 object-cover rounded-lg"
-                />
-            ))}
+        <div className="w-full max-w-6xl mx-auto mt-4">
+            <Carousel autoPlay infiniteLoop showThumbs={false} showStatus={false} interval={3000}>
+                {bannerImages.map((img, index) => (
+                    <div key={index}>
+                        <img src={img} alt={`banner-${index}`} className="h-64 object-cover rounded-lg" />
+                    </div>
+                ))}
+            </Carousel>
         </div>
     );
 };

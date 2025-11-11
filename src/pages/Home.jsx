@@ -1,20 +1,17 @@
+import React from "react";
 import Banner from "./Banner";
 import Categories from "./Categories";
 import RecentIssues from "./RecentIssues";
 import CommunityStats from "./CommunityStats";
-import Navbar from "../../components/Navbar";
-import Footer from "../../components/Footer";
 
 const Home = () => {
     return (
-        <>
-            <Navbar />
+        <div className="px-6">
             <Banner />
             <Categories />
             <RecentIssues />
             <CommunityStats />
-            <Footer />
-        </>
+        </div>
     );
 };
 

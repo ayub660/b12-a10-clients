@@ -3,18 +3,16 @@ import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { bannerImages } from "../assets/images";
 
-const Banner = () => {
-    return (
-        <div className="w-full max-w-6xl mx-auto mt-4">
-            <Carousel autoPlay infiniteLoop showThumbs={false} showStatus={false} interval={3000}>
-                {bannerImages.map((img, index) => (
-                    <div key={index}>
-                        <img src={img} alt={`banner-${index}`} className="h-64 object-cover rounded-lg" />
-                    </div>
-                ))}
-            </Carousel>
-        </div>
-    );
-};
+const Banner = () => (
+    <div className="max-w-7xl mx-auto mt-4">
+        <Carousel autoPlay infiniteLoop showThumbs={false} showStatus={false}>
+            {bannerImages.map((img, idx) => (
+                <div key={idx}>
+                    <img src={img} className="h-60 md:h-96 object-cover rounded-lg" alt={`Slide ${idx}`} />
+                </div>
+            ))}
+        </Carousel>
+    </div>
+);
 
 export default Banner;

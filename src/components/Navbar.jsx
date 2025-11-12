@@ -1,10 +1,19 @@
 import React, { useState } from "react";
-import { NavLink, Link } from "react-router-dom";
-import { useAuth } from "../hooks/useAuth";
+import { NavLink, Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthProvider";
 
 const Navbar = () => {
     const { user, logoutUser } = useAuth();
     const [showMenu, setShowMenu] = useState(false);
+    const navigate = useNavigate();
+
+    const handleAddIssueClick = () => {
+        if (user) {
+            navigate("/add-issue"); // লগিন থাকলে AddIssue page
+        } else {
+            navigate("/login"); // না থাকলে login page
+        }
+    };
 
     return (
         <nav className="bg-white shadow sticky top-0 z-50">
@@ -15,6 +24,12 @@ const Navbar = () => {
                 <div className="flex gap-6">
                     <NavLink to="/" className={({ isActive }) => isActive ? "text-green-600 font-semibold" : "text-gray-700"}>Home</NavLink>
                     <NavLink to="/all-issues" className={({ isActive }) => isActive ? "text-green-600 font-semibold" : "text-gray-700"}>Issues</NavLink>
+                    <button
+                        onClick={handleAddIssueClick}
+                        className="text-gray-700 font-semibold hover:text-green-600"
+                    >
+                        Add Issue
+                    </button>
                     {user && <>
                         <NavLink to="/my-issues" className={({ isActive }) => isActive ? "text-green-600 font-semibold" : "text-gray-700"}>My Issues</NavLink>
                         <NavLink to="/my-contributions" className={({ isActive }) => isActive ? "text-green-600 font-semibold" : "text-gray-700"}>My Contributions</NavLink>

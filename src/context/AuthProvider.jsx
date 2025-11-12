@@ -1,4 +1,5 @@
-import React, { createContext, useState, useEffect, useContext } from "react";
+// src/context/AuthProvider.jsx
+import React, { createContext, useContext, useState, useEffect } from "react";
 import {
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
@@ -6,35 +7,53 @@ import {
     signInWithPopup,
     signOut,
     onAuthStateChanged,
-    updateProfile
+    updateProfile,
+    sendPasswordResetEmail
 } from "firebase/auth";
 import { auth } from "../firebase/firebase.config";
 
-// Create AuthContext
-export const AuthContext = createContext();
+// Create context
+const AuthContext = createContext();
 
-// AuthProvider
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
 
     // Register user
     const registerUser = async (email, password, name, photoURL) => {
-        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-        await updateProfile(userCredential.user, { displayName: name, photoURL });
-        setUser(userCredential.user);
-        return userCredential.user;
+        try {
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            await updateProfile(userCredential.user, { displayName: name, photoURL });
+            setUser(userCredential.user);
+            return userCredential.user;
+        } catch (err) {
+            throw err;
+        }
     };
 
     // Login user
     const loginUser = async (email, password) => {
-        return await signInWithEmailAndPassword(auth, email, password);
+        try {
+            const userCredential = await signInWithEmailAndPassword(auth, email, password);
+            setUser(userCredential.user);
+            return userCredential.user;
+        } catch (err) {
+            console.error("Login Error:", err);
+            throw err; // rethrow to handle in component
+        }
     };
 
     // Google login
     const googleLogin = async () => {
         const provider = new GoogleAuthProvider();
-        return await signInWithPopup(auth, provider);
+        try {
+            const result = await signInWithPopup(auth, provider);
+            setUser(result.user);
+            return result.user;
+        } catch (err) {
+            console.error("Google Login Error:", err);
+            throw err;
+        }
     };
 
     // Logout
@@ -43,7 +62,17 @@ export const AuthProvider = ({ children }) => {
         setUser(null);
     };
 
-    // Listen to auth changes
+    // Forgot password
+    const forgotPassword = async (email) => {
+        try {
+            await sendPasswordResetEmail(auth, email);
+        } catch (err) {
+            console.error("Forgot Password Error:", err);
+            throw err;
+        }
+    };
+
+    // Listen for auth state changes
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
             setUser(currentUser);
@@ -53,7 +82,17 @@ export const AuthProvider = ({ children }) => {
     }, []);
 
     return (
-        <AuthContext.Provider value={{ user, loading, registerUser, loginUser, googleLogin, logoutUser }}>
+        <AuthContext.Provider
+            value={{
+                user,
+                loading,
+                registerUser,
+                loginUser,
+                googleLogin,
+                logoutUser,
+                forgotPassword
+            }}
+        >
             {children}
         </AuthContext.Provider>
     );

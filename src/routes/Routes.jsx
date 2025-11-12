@@ -1,3 +1,4 @@
+// src/routes/Routes.jsx
 import React from "react";
 import { createBrowserRouter, Outlet } from "react-router-dom";
 import Navbar from "../components/Navbar";
@@ -18,7 +19,7 @@ const Layout = () => (
     <div className="flex flex-col min-h-screen">
         <Navbar />
         <main className="flex-grow">
-            <Outlet /> {/* must import Outlet */}
+            <Outlet />
         </main>
         <Footer />
     </div>

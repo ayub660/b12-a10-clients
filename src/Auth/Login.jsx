@@ -101,15 +101,13 @@ const Login = () => {
                     Login with Google
                 </button>
 
+
                 <p className="text-center text-gray-600 mt-2">
-                    <button
-                        type="button"
-                        onClick={handleForgotPassword}
-                        className="text-blue-500 underline"
-                    >
+                    <Link to="/forgot-password" className="text-blue-500 underline">
                         Forgot Password?
-                    </button>
+                    </Link>
                 </p>
+
 
                 <p className="text-center text-gray-600 mt-2">
                     Don't have an account? <Link to="/register" className="text-green-600">Register</Link>

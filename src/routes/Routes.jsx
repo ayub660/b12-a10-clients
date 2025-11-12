@@ -1,4 +1,3 @@
-// src/routes/Routes.jsx
 import React from "react";
 import { createBrowserRouter, Outlet } from "react-router-dom";
 import Navbar from "../components/Navbar";
@@ -13,6 +12,7 @@ import AllIssues from "../issues/Allissues";
 import IssueDetails from "../issues/IssueDetails";
 import MyIssues from "../issues/MyIssues";
 import MyContribution from "../issues/MyContribution";
+import ForgotPassword from "../auth/ForgotPassword";
 
 // Layout: Navbar + Page + Footer
 const Layout = () => (
@@ -33,6 +33,7 @@ export const router = createBrowserRouter([
             { path: "/", element: <Home /> },
             { path: "login", element: <Login /> },
             { path: "register", element: <Register /> },
+            { path: "forgot-password", element: <ForgotPassword /> },
             { path: "add-issue", element: <PrivateRoute><AddIssue /></PrivateRoute> },
             { path: "all-issues", element: <AllIssues /> },
             { path: "issue/:id", element: <PrivateRoute><IssueDetails /></PrivateRoute> },

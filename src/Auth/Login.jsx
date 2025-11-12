@@ -1,117 +1,52 @@
 import React, { useState } from "react";
-import { toast } from "react-toastify";
-import { auth } from "../firebase/firebase.config";
-import {
-    signInWithEmailAndPassword,
-    GoogleAuthProvider,
-    signInWithPopup,
-    fetchSignInMethodsForEmail,
-} from "firebase/auth";
-import { FcGoogle } from "react-icons/fc";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useAuth } from "../hooks/useAuth";
+import Swal from "sweetalert2";
 
 const Login = () => {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [loading, setLoading] = useState(false);
-    const [errorMsg, setErrorMsg] = useState(""); // <-- error state
+    const { loginUser, googleLogin } = useAuth();
+    const navigate = useNavigate();
+    const location = useLocation();
+    const [error, setError] = useState("");
 
-    // Email/Password Login
-    const handleLogin = async (e) => {
+    const from = location.state?.from?.pathname || "/";
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        setLoading(true);
-        setErrorMsg(""); // clear previous error
+        const email = e.target.email.value;
+        const password = e.target.password.value;
         try {
-            const methods = await fetchSignInMethodsForEmail(auth, email);
-            if (methods.length === 0) {
-                setErrorMsg("User not registered!"); // show below button
-                setLoading(false);
-                return;
-            }
-
-            await signInWithEmailAndPassword(auth, email, password);
-            toast.success("Login successful!");
+            await loginUser(email, password);
+            Swal.fire("Success", "Logged in successfully", "success");
+            navigate(from, { replace: true });
         } catch (err) {
-            setErrorMsg("Incorrect email or password!"); // show below button
-        } finally {
-            setLoading(false);
+            setError("Invalid email or password");
         }
     };
 
-    // Google Login
-    const handleGoogleLogin = async () => {
-        const provider = new GoogleAuthProvider();
+    const handleGoogle = async () => {
         try {
-            const result = await signInWithPopup(auth, provider);
-            toast.success(`Welcome ${result.user.displayName}`);
-        } catch (err) {
-            if (err.code === "auth/popup-closed-by-user") {
-                toast.error("Google login popup was closed!");
-            } else {
-                toast.error(err.message);
-            }
+            await googleLogin();
+            Swal.fire("Success", "Logged in with Google", "success");
+            navigate(from, { replace: true });
+        } catch {
+            setError("Google login failed");
         }
     };
 
     return (
-        <div className="hero min-h-screen bg-base-200">
-            <div className="hero-content flex-col lg:flex-row-reverse w-full max-w-6xl mx-auto">
-                <div className="card bg-base-100 w-full max-w-sm shadow-2xl">
-                    <div className="card-body">
-                        <form onSubmit={handleLogin} className="space-y-4">
-                            <div>
-                                <label className="label">Email</label>
-                                <input
-                                    type="email"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    placeholder="Email"
-                                    className="input input-bordered w-full"
-                                    required
-                                />
-                            </div>
-                            <div>
-                                <label className="label">Password</label>
-                                <input
-                                    type="password"
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                    placeholder="Password"
-                                    className="input input-bordered w-full"
-                                    required
-                                />
-                            </div>
-
-                            <button
-                                type="submit"
-                                className={`btn btn-neutral w-full mt-4`}
-                                disabled={loading}
-                            >
-                                {loading ? "Logging in..." : "Login"}
-                            </button>
-
-                            {/* Error message below button */}
-                            {errorMsg && (
-                                <p className="text-red-500 text-sm mt-2">{errorMsg}</p>
-                            )}
-                        </form>
-
-                        <div className="divider">OR</div>
-                        <button
-                            onClick={handleGoogleLogin}
-                            className="btn btn-outline w-full flex items-center justify-center gap-2"
-                        >
-                            <FcGoogle size={24} /> Login with Google
-                        </button>
-
-                        <p className="text-center mt-4 text-sm">
-                            Don't have an account?{" "}
-                            <a href="/register" className="link link-primary">
-                                Register
-                            </a>
-                        </p>
-                    </div>
-                </div>
-            </div>
+        <div className="min-h-[70vh] flex justify-center items-center">
+            <form onSubmit={handleSubmit} className="bg-white p-6 shadow-md rounded w-96">
+                <h2 className="text-2xl font-bold mb-4 text-center">Login</h2>
+                {error && <p className="text-red-500 mb-2">{error}</p>}
+                <input type="email" name="email" placeholder="Email" className="input input-bordered w-full mb-3" required />
+                <input type="password" name="password" placeholder="Password" className="input input-bordered w-full mb-3" required />
+                <button type="submit" className="w-full bg-green-600 text-white py-2 rounded mb-2">Login</button>
+                <button type="button" onClick={handleGoogle} className="w-full bg-blue-500 text-white py-2 rounded mb-2">Login with Google</button>
+                <p className="text-center text-gray-600 mt-2">
+                    Don't have an account? <Link to="/register" className="text-green-600">Register</Link>
+                </p>
+            </form>
         </div>
     );
 };

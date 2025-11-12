@@ -1,24 +1,43 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { categoryImages } from "../assets/images";
+import LoadingSpinner from "../components/LoadingSpinner";
+
+const categories = [
+    { name: "Garbage" },
+    { name: "RoadDamage" },
+    { name: "BrokenProperty" },
+    { name: "IllegalConstruction" },
+];
 
 const Categories = () => {
-    const categories = Object.keys(categoryImages);
+    const [loading, setLoading] = useState(true);
+
+    // simulate image loading
+    useEffect(() => {
+        const timer = setTimeout(() => setLoading(false), 1000); // 1 sec loader
+        return () => clearTimeout(timer);
+    }, []);
+
+    if (loading) return <LoadingSpinner />;
 
     return (
-        <div className="max-w-6xl mx-auto py-10 grid grid-cols-2 md:grid-cols-4 gap-6">
-            {categories.map((cat) => (
-                <button
-                    key={cat}
-                    className="bg-white shadow-md rounded-lg overflow-hidden hover:scale-105 transform transition duration-300"
-                >
-                    <img
-                        src={categoryImages[cat]}
-                        alt={cat}
-                        className="w-full h-32 object-cover"
-                    />
-                    <div className="text-center py-2 font-semibold">{cat}</div>
-                </button>
-            ))}
+        <div className="mt-6">
+            <h2 className="text-2xl font-bold mb-4">Categories</h2>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-6">
+                {categories.map((cat) => (
+                    <button
+                        key={cat.name}
+                        className="flex flex-col items-center justify-center p-4 bg-white shadow-lg rounded-lg hover:shadow-2xl transition transform hover:scale-105"
+                    >
+                        <img
+                            src={categoryImages[cat.name]}
+                            alt={cat.name}
+                            className="w-60 h-40 object-cover rounded mb-3" // image size increased
+                        />
+                        <span className="text-gray-800 font-semibold text-lg">{cat.name}</span>
+                    </button>
+                ))}
+            </div>
         </div>
     );
 };

@@ -2,15 +2,18 @@ import React from "react";
 import Banner from "./Banner";
 import Categories from "./Categories";
 import RecentIssues from "./RecentIssues";
-import CommunityStats from "./CommunityStats";
 
 const Home = () => {
     return (
-        <div className="bg-base-200 min-h-screen">
+        <div className="max-w-7xl mx-auto px-4 mt-2">
+            {/* Slider */}
             <Banner />
+
+            {/* Category Section */}
             <Categories />
+
+            {/* Recent Complaints */}
             <RecentIssues />
-            <CommunityStats />
         </div>
     );
 };

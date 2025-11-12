@@ -2,10 +2,8 @@ import React from "react";
 
 const LoadingSpinner = () => {
     return (
-        <div className="flex justify-center items-center min-h-screen">
-            <div className="radial-progress text-primary" style={{ "--value": 70 }}>
-                Loading...
-            </div>
+        <div className="flex items-center justify-center h-64">
+            <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-green-600"></div>
         </div>
     );
 };

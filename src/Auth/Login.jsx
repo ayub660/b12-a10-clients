@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { useAuth } from "../hooks/useAuth";
+import { useAuth } from "../context/AuthProvider";
 import Swal from "sweetalert2";
 
 const Login = () => {
@@ -13,14 +13,19 @@ const Login = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const email = e.target.email.value;
-        const password = e.target.password.value;
+        const email = e.target.email.value.trim();
+        const password = e.target.password.value.trim();
+
         try {
             await loginUser(email, password);
             Swal.fire("Success", "Logged in successfully", "success");
             navigate(from, { replace: true });
         } catch (err) {
-            setError("Invalid email or password");
+            console.log(err);
+            if (err.code === "auth/user-not-found") setError("No user found with this email");
+            else if (err.code === "auth/wrong-password") setError("Incorrect password");
+            else if (err.code === "auth/invalid-email") setError("Invalid email format");
+            else setError("Login failed. Try again.");
         }
     };
 
@@ -30,7 +35,7 @@ const Login = () => {
             Swal.fire("Success", "Logged in with Google", "success");
             navigate(from, { replace: true });
         } catch {
-            setError("Google login failed");
+            setError("Google login failed. Try again.");
         }
     };
 

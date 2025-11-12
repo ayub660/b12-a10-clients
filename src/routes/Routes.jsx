@@ -18,7 +18,7 @@ const Layout = () => (
     <div className="flex flex-col min-h-screen">
         <Navbar />
         <main className="flex-grow">
-            <Outlet />
+            <Outlet /> {/* must import Outlet */}
         </main>
         <Footer />
     </div>

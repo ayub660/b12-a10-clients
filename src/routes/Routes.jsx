@@ -1,18 +1,23 @@
+// src/routes/Routes.jsx
 import React from "react";
 import { createBrowserRouter, Outlet } from "react-router-dom";
+
+// Components
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import PrivateRoute from "../components/PrivateRoute";
+
+// Pages
 import Home from "../pages/Home";
 import Login from "../auth/Login";
 import Register from "../auth/Register";
+import ForgotPassword from "../auth/ForgotPassword";
 import NotFound from "../Error/NotFound";
-import PrivateRoute from "../components/PrivateRoute";
 import AddIssue from "../issues/AddIssue";
 import AllIssues from "../issues/Allissues";
 import IssueDetails from "../issues/IssueDetails";
 import MyIssues from "../issues/MyIssues";
 import MyContribution from "../issues/MyContribution";
-import ForgotPassword from "../auth/ForgotPassword";
 
 // Layout: Navbar + Page + Footer
 const Layout = () => (
@@ -30,15 +35,20 @@ export const router = createBrowserRouter([
         path: "/",
         element: <Layout />,
         children: [
+            // Public Pages
             { path: "/", element: <Home /> },
             { path: "login", element: <Login /> },
             { path: "register", element: <Register /> },
             { path: "forgot-password", element: <ForgotPassword /> },
-            { path: "add-issue", element: <PrivateRoute><AddIssue /></PrivateRoute> },
             { path: "all-issues", element: <AllIssues /> },
+
+            // Private Pages (login required)
+            { path: "add-issue", element: <PrivateRoute><AddIssue /></PrivateRoute> },
             { path: "issue/:id", element: <PrivateRoute><IssueDetails /></PrivateRoute> },
             { path: "my-issues", element: <PrivateRoute><MyIssues /></PrivateRoute> },
             { path: "my-contribution", element: <PrivateRoute><MyContribution /></PrivateRoute> },
+
+            // 404 Page
             { path: "*", element: <NotFound /> },
         ],
     },

@@ -13,7 +13,7 @@ const MyIssues = () => {
     const [deletingIssue, setDeletingIssue] = useState(null);
     const [newTitle, setNewTitle] = useState("");
 
-    // ✅ Fetch user's issues
+    //  Fetch user's issues
     const fetchIssues = async () => {
         try {
             const res = await axios.get(`http://localhost:3500/my-issues/${user.email}`);
@@ -29,7 +29,7 @@ const MyIssues = () => {
         if (user?.email) fetchIssues();
     }, [user]);
 
-    // ✅ Edit Modal Handlers
+    // Edit Modal Handlers
     const handleEditClick = (issue) => {
         setEditingIssue(issue);
         setNewTitle(issue.title);
@@ -48,7 +48,7 @@ const MyIssues = () => {
         }
     };
 
-    // ✅ Delete Modal Handlers
+    //  Delete Modal Handlers
     const handleDeleteConfirm = async () => {
         try {
             await axios.delete(`http://localhost:3500/issues/${deletingIssue._id}`);

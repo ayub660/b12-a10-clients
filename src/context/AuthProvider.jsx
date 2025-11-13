@@ -39,7 +39,7 @@ export const AuthProvider = ({ children }) => {
             return userCredential.user;
         } catch (err) {
             console.error("Login Error:", err);
-            throw err; // rethrow to handle in component
+            throw err;
         }
     };
 
@@ -72,7 +72,7 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
-    // Listen for auth state changes
+
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
             setUser(currentUser);

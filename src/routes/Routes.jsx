@@ -1,8 +1,6 @@
 // src/routes/Routes.jsx
 import React from "react";
 import { createBrowserRouter, Outlet } from "react-router-dom";
-
-// Components
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import PrivateRoute from "../components/PrivateRoute";
@@ -46,7 +44,8 @@ export const router = createBrowserRouter([
             { path: "add-issue", element: <PrivateRoute><AddIssue /></PrivateRoute> },
             { path: "issue/:id", element: <PrivateRoute><IssueDetails /></PrivateRoute> },
             { path: "my-issues", element: <PrivateRoute><MyIssues /></PrivateRoute> },
-            { path: "my-contribution", element: <PrivateRoute><MyContribution /></PrivateRoute> },
+            { path: "my-contributions", element: <PrivateRoute><MyContribution /></PrivateRoute> },
+
 
             // 404 Page
             { path: "*", element: <NotFound /> },

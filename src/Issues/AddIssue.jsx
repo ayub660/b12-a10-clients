@@ -15,10 +15,12 @@ const AddIssue = () => {
         amount: "",
     });
 
+    // Input change handler
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
+    // Submit handler
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -29,13 +31,14 @@ const AddIssue = () => {
 
         const newIssue = {
             ...formData,
-            status: "ongoing",
+            status: "Ongoing", // default
             date: new Date().toISOString(),
             email: user.email,
             amount: Number(formData.amount) || 0,
         };
 
         setLoading(true);
+
         try {
             const res = await fetch("http://localhost:3500/issues", {
                 method: "POST",
@@ -67,24 +70,29 @@ const AddIssue = () => {
     };
 
     return (
-        <div className="min-h-[70vh] flex justify-center items-center">
+        <div className="min-h-[80vh] flex justify-center items-center bg-gray-50 p-4">
             <form
                 onSubmit={handleSubmit}
-                className="bg-white p-6 shadow-md rounded w-full max-w-lg"
+                className="bg-white shadow-lg rounded-xl p-6 w-full max-w-lg"
             >
-                <h2 className="text-2xl font-bold mb-4 text-center">Add Issue</h2>
+                <h2 className="text-3xl font-bold mb-6 text-center text-gray-800">
+                    Add Issue
+                </h2>
 
-                <label className="block mb-2 font-semibold">Title</label>
+                {/* Title */}
+                <label className="block mb-1 font-semibold">Title</label>
                 <input
                     type="text"
                     name="title"
                     value={formData.title}
                     onChange={handleChange}
                     className="input input-bordered w-full mb-3"
+                    placeholder="Enter issue title"
                     required
                 />
 
-                <label className="block mb-2 font-semibold">Category</label>
+                {/* Category */}
+                <label className="block mb-1 font-semibold">Category</label>
                 <select
                     name="category"
                     value={formData.category}
@@ -97,47 +105,56 @@ const AddIssue = () => {
                     <option value="IllegalConstruction">Illegal Construction</option>
                 </select>
 
-                <label className="block mb-2 font-semibold">Location</label>
+                {/* Location */}
+                <label className="block mb-1 font-semibold">Location</label>
                 <input
                     type="text"
                     name="location"
                     value={formData.location}
                     onChange={handleChange}
                     className="input input-bordered w-full mb-3"
+                    placeholder="Enter location"
                     required
                 />
 
-                <label className="block mb-2 font-semibold">Description</label>
+                {/* Description */}
+                <label className="block mb-1 font-semibold">Description</label>
                 <textarea
                     name="description"
                     value={formData.description}
                     onChange={handleChange}
-                    className="input input-bordered w-full mb-3"
+                    className="input input-bordered w-full mb-3 h-24 resize-none"
+                    placeholder="Describe the issue"
                     required
                 />
 
-                <label className="block mb-2 font-semibold">Image URL</label>
+                {/* Image */}
+                <label className="block mb-1 font-semibold">Image URL</label>
                 <input
                     type="text"
                     name="image"
                     value={formData.image}
                     onChange={handleChange}
                     className="input input-bordered w-full mb-3"
+                    placeholder="https://example.com/image.jpg"
                 />
 
-                <label className="block mb-2 font-semibold">Suggested Fix Amount</label>
+                {/* Suggested Budget */}
+                <label className="block mb-1 font-semibold">Suggested Fix Amount</label>
                 <input
                     type="number"
                     name="amount"
                     value={formData.amount}
                     onChange={handleChange}
-                    className="input input-bordered w-full mb-3"
+                    className="input input-bordered w-full mb-4"
+                    placeholder="Enter suggested budget"
                 />
 
+                {/* Submit */}
                 <button
                     type="submit"
                     disabled={loading}
-                    className="w-full bg-green-600 text-white py-2 rounded mt-3"
+                    className="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition"
                 >
                     {loading ? "Adding..." : "Add Issue"}
                 </button>

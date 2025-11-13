@@ -5,7 +5,7 @@ const CategoryCard = ({ title, image }) => (
         <img
             src={image}
             alt={title}
-            className="h-48 w-full object-cover" // height increased
+            className="h-48 w-full object-cover"
         />
         <div className="p-3 bg-white text-center font-semibold text-lg">
             {title}

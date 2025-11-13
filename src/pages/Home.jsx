@@ -1,6 +1,6 @@
 // src/pages/Home.jsx
 import React from "react";
-import Banner from "./Banner"; // <-- pages folder থেকে
+import Banner from "./Banner";
 import Categories from "./Categories";
 import RecentIssues from "./RecentIssues";
 

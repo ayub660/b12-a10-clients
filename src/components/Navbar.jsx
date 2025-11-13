@@ -9,9 +9,9 @@ const Navbar = () => {
 
     const handleAddIssueClick = () => {
         if (user) {
-            navigate("/add-issue"); // লগিন থাকলে AddIssue page
+            navigate("/add-issue");
         } else {
-            navigate("/login"); // না থাকলে login page
+            navigate("/login");
         }
     };
 

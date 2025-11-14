@@ -34,7 +34,7 @@ const MyContribution = () => {
             }
             try {
                 setLoading(true);
-                const res = await axios.get(`http://localhost:3500/my-contributions/${user.email}`);
+                const res = await axios.get(`https://cleancity-project.vercel.app/my-contributions/${user.email}`);
                 // backend returns { success: true, data: [...] } in your server.js — adapt if different
                 const data = res.data?.data ?? res.data ?? [];
                 setContributions(data);

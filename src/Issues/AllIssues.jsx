@@ -7,7 +7,7 @@ const AllIssues = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        axios.get("http://localhost:3500/issues")
+        axios.get("https://cleancity-project.vercel.app/issues")
             .then(res => {
                 if (res.data.success) {
                     setIssues(res.data.data);

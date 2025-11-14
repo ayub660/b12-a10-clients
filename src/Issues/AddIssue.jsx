@@ -15,6 +15,16 @@ const AddIssue = () => {
         amount: "",
     });
 
+    // 🔹 SweetAlert centralized function
+    const showAlert = (type, title, text) => {
+        Swal.fire({
+            icon: type,
+            title,
+            text,
+            confirmButtonColor: type === "success" ? "#22c55e" : "#ef4444",
+        });
+    };
+
     // Input change handler
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -25,13 +35,13 @@ const AddIssue = () => {
         e.preventDefault();
 
         if (!user) {
-            Swal.fire("Error", "You must be logged in to add an issue", "error");
+            showAlert("error", "Error", "You must be logged in to add an issue");
             return;
         }
 
         const newIssue = {
             ...formData,
-            status: "Ongoing", // default
+            status: "Ongoing",
             date: new Date().toISOString(),
             email: user.email,
             amount: Number(formData.amount) || 0,
@@ -40,7 +50,7 @@ const AddIssue = () => {
         setLoading(true);
 
         try {
-            const res = await fetch("http://localhost:3500/issues", {
+            const res = await fetch("https://cleancity-project.vercel.app/issues", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(newIssue),
@@ -49,7 +59,7 @@ const AddIssue = () => {
             const data = await res.json();
 
             if (res.ok && data.success) {
-                Swal.fire("Success", "Issue added successfully", "success");
+                showAlert("success", "Success", "Issue added successfully");
                 setFormData({
                     title: "",
                     category: "Garbage",
@@ -59,11 +69,11 @@ const AddIssue = () => {
                     amount: "",
                 });
             } else {
-                Swal.fire("Error", data.message || "Failed to add issue", "error");
+                showAlert("error", "Error", data.message || "Failed to add issue");
             }
         } catch (err) {
             console.error("Fetch error:", err);
-            Swal.fire("Error", "Server error: Could not add issue", "error");
+            showAlert("error", "Error", "Server error: Could not add issue");
         } finally {
             setLoading(false);
         }

@@ -24,7 +24,7 @@ const IssueDetails = () => {
     useEffect(() => {
         const fetchIssue = async () => {
             try {
-                const res = await axios.get(`http://localhost:3500/issues/${id}`);
+                const res = await axios.get(`https://cleancity-project.vercel.app/issues/${id}`);
                 setIssue(res.data.data);
             } catch (err) {
                 console.error(err);
@@ -51,7 +51,7 @@ const IssueDetails = () => {
 
         setSubmitting(true);
         try {
-            await axios.post("http://localhost:3500/contributions", {
+            await axios.post("https://cleancity-project.vercel.app/contributions", {
                 issueId: issue._id,
                 title: issue.title,
                 amount: issue.amount,

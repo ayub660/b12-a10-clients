@@ -7,7 +7,7 @@ const RecentIssues = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch("http://localhost:3500/issues")
+        fetch("https://cleancity-project.vercel.app/issues")
             .then((res) => res.json())
             .then((data) => {
                 if (data.success) setIssues(data.data);

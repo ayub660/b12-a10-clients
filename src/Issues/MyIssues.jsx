@@ -110,10 +110,10 @@ const MyIssues = () => {
                                     <td className="py-3 px-4">
                                         <span
                                             className={`px-3 py-1 rounded-full text-xs font-semibold ${issue.status === "Pending"
-                                                    ? "bg-yellow-100 text-yellow-800"
-                                                    : issue.status === "Resolved"
-                                                        ? "bg-green-100 text-green-800"
-                                                        : "bg-red-100 text-red-800"
+                                                ? "bg-yellow-100 text-yellow-800"
+                                                : issue.status === "Resolved"
+                                                    ? "bg-green-100 text-green-800"
+                                                    : "bg-red-100 text-red-800"
                                                 }`}
                                         >
                                             {issue.status}

@@ -1,3 +1,4 @@
+
 // src/pages/Categories.jsx
 import React, { useState, useEffect } from "react";
 import { categoryImages } from "../assets/images";

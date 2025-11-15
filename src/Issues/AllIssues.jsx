@@ -22,7 +22,7 @@ const AllIssues = () => {
     return (
         <div className="grid grid-cols-3 gap-6 mt-6">
             {issues.map(issue => (
-                <div key={issue._id} className="border p-4 rounded shadow-md">
+                <div key={issue._id} className=" p-4 rounded shadow-md">
                     <img src={issue.image} alt={issue.title} className="h-40 w-full object-cover rounded" />
                     <h3 className="text-xl font-bold mt-2">{issue.title}</h3>
                     <p className="text-gray-600">{issue.description}</p>

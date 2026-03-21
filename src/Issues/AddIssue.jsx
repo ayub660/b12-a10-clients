@@ -2,6 +2,9 @@
 import React, { useState } from "react";
 import { useAuth } from "../context/AuthProvider";
 import Swal from "sweetalert2";
+// 1. Apnar config file theke BASE_URL import kora holo
+import { BASE_URL } from "../api/config";
+
 
 const AddIssue = () => {
     const { user } = useAuth();
@@ -50,7 +53,8 @@ const AddIssue = () => {
         setLoading(true);
 
         try {
-            const res = await fetch("https://cleancity-project.vercel.app/issues", {
+            // 2. Ekhane BASE_URL use kora hoyeche dynamic request pathanor jonno
+            const res = await fetch(`${BASE_URL}/issues`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(newIssue),

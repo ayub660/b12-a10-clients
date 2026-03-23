@@ -21,7 +21,7 @@ const formatDate = (iso) => {
 
 const formatCurrency = (amt) => {
     if (amt == null) return "-";
-    // Clean City project onujayi ekhane $ ba ৳ use korte paren
+
     return `$${Number(amt).toLocaleString()}`;
 };
 

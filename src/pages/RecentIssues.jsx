@@ -7,7 +7,7 @@ const RecentIssues = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch("https://cleancity-project.vercel.app/issues")
+        fetch(`${import.meta.env.VITE_API_URL}/issues`)
             .then((res) => res.json())
             .then((data) => {
                 if (data.success) setIssues(data.data);

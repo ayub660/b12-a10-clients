@@ -1,9 +1,8 @@
-// src/issues/MyIssues.jsx
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useAuth } from "../context/AuthProvider";
 import LoadingSpinner from "../components/LoadingSpinner";
-import { BASE_URL } from "../api/config"; // BASE_URL import korun
+import { BASE_URL } from "../api/config";
 
 const MyIssues = () => {
     const { user } = useAuth();
@@ -115,10 +114,10 @@ const MyIssues = () => {
                                         <td className="py-4 px-6">
                                             <span
                                                 className={`px-3 py-1 rounded-full text-xs font-bold tracking-wide shadow-sm ${issue.status === "Pending"
-                                                        ? "bg-amber-100 text-amber-700"
-                                                        : issue.status === "Resolved"
-                                                            ? "bg-green-100 text-green-700"
-                                                            : "bg-red-100 text-red-700"
+                                                    ? "bg-amber-100 text-amber-700"
+                                                    : issue.status === "Resolved"
+                                                        ? "bg-green-100 text-green-700"
+                                                        : "bg-red-100 text-red-700"
                                                     }`}
                                             >
                                                 {issue.status}
